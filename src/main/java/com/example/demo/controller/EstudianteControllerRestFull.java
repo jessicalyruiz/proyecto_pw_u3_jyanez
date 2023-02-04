@@ -34,4 +34,20 @@ public class EstudianteControllerRestFull {
 		
 	}
 
+	@GetMapping(path ="/buscarNombre/{nombre}")
+	public Estudiante encontrarNombre(@PathVariable("nombre") String nombre) {
+		
+		
+		return this.estudianteService.buscarNombre(nombre);
+		
+	}
+
+	@GetMapping(path ="/buscarApellido/{apellido}")
+	public Estudiante encontrarApellido(@PathVariable("apellido") String apellido) {
+		
+		
+		return this.estudianteService.buscarApellido(apellido);
+		
+	}
+
 }

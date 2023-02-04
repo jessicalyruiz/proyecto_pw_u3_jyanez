@@ -8,4 +8,6 @@ public interface IEstudianteService {
 	public void actualizar(Estudiante estudiante);
 	public Estudiante encontrar(Integer id);
 	public void borrar(Integer id);
+	public Estudiante buscarNombre(String nombre);
+	public Estudiante buscarApellido(String apellido);
 }
