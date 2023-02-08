@@ -41,7 +41,7 @@ public class ProfesorControllerRestFull {
 		return this.profesorService.encontrar(id);
 	}
 	
-	@GetMapping(path = "/buscarc/{cedula}")
+	@GetMapping(path = "/cedulas/{cedula}")
 	public Profesor buscarCedula(@PathVariable("cedula") String cedula) {
 		return this.profesorService.buscarCedula(cedula);
 	}
