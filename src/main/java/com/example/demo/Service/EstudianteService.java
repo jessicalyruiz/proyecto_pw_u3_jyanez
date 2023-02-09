@@ -1,5 +1,8 @@
 package com.example.demo.Service;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +46,18 @@ public class EstudianteService implements IEstudianteService{
 	public Estudiante buscarApellido(String apellido) {
 		// TODO Auto-generated method stub
 		return this.estudianteRepo.buscarApellido(apellido);
+	}
+
+	@Override
+	public List<Estudiante> buscarTodos() {
+		// TODO Auto-generated method stub
+		return this.estudianteRepo.buscarTodos();
+	}
+
+	@Override
+	public List<Estudiante> buscarTodosSalario(BigDecimal salario) {
+		// TODO Auto-generated method stub
+		return this.estudianteRepo.buscarTodosSalario(salario);
 	}
 
 }
