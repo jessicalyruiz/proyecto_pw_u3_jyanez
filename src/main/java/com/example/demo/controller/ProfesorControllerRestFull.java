@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,12 +22,14 @@ public class ProfesorControllerRestFull {
 	private IProfesorService profesorService;
 	
 	@PostMapping
-	public void registrar(Profesor profesor) {
+	public void registrar(@RequestBody  Profesor profesor) {
+		this.profesorService.registrar(profesor);
 		
 	}
 	@PutMapping(path = "/{id}")
-	public void actualizar(@PathVariable("id") Integer id, Profesor profesor) {
-		
+	public void actualizar(@PathVariable("id") Integer id,@RequestBody Profesor profesor) {
+		profesor.setId(id);
+		this.profesorService.actualizar(profesor);
 	}
 	
 	@PutMapping
