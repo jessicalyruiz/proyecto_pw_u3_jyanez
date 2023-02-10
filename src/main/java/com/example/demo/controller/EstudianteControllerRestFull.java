@@ -1,9 +1,14 @@
 package com.example.demo.controller;
 
 import java.math.BigDecimal;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,18 +48,23 @@ public class EstudianteControllerRestFull {
 	
 	
 	@GetMapping(path ="/{id}")
-	public Estudiante encontrar(@PathVariable("id") Integer id) {
+	public ResponseEntity<Estudiante>  encontrar(@PathVariable("id") Integer id) {
 		
+		Estudiante estu=this.estudianteService.encontrar(id);
+		return ResponseEntity.status(230).body(estu);
 		
-		return this.estudianteService.encontrar(id);
+		 
 		
 	}
 	
 	@GetMapping()
-	public List<Estudiante> encontrarTodos() {
+	public  ResponseEntity<List<Estudiante>> encontrarTodos() {
 		
+		HttpHeaders cabeceras=new HttpHeaders();
+		cabeceras.add("detalle msj", "Estudiantes encontrados correctamente");
+		 List<Estudiante> lista=this.estudianteService.buscarTodos();
+		return new ResponseEntity<>(lista, cabeceras,230);
 		
-		return this.estudianteService.buscarTodos();
 		
 	}
 	
@@ -69,6 +79,11 @@ public class EstudianteControllerRestFull {
 	
 	@DeleteMapping(path = "/{id}")
 	public void borrar(@PathVariable("id") Integer id) {
+		  this.estudianteService.borrar(id);
+	}
+	
+	@PostMapping(path = "/borrar/{id}")
+	public void borrarT(@PathVariable("id") Integer id) {
 		  this.estudianteService.borrar(id);
 	}
 	

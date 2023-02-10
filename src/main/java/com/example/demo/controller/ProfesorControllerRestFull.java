@@ -17,7 +17,7 @@ import com.example.demo.modelo.Profesor;
 @RestController
 @RequestMapping("/profesores")
 public class ProfesorControllerRestFull {
-	//metodos son las capacidades
+	//metodos son las capacidades 
 	@Autowired
 	private IProfesorService profesorService;
 	
