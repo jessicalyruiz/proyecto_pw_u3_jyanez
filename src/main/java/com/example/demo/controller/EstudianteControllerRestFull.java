@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,12 +35,35 @@ public class EstudianteControllerRestFull {
 	public void registrar(@RequestBody Estudiante estudiante) {
 		this.estudianteService.registrar(estudiante);
 	}
-	@PutMapping(path = "/{id}")
+	@PutMapping(path = "/{id}", consumes = {
+			MediaType.APPLICATION_XML_VALUE
+	})
 	public void actualizar(@PathVariable("id") Integer id,@RequestBody Estudiante estudiante, @RequestParam String provincia) {
 		estudiante.setId(id);
 		System.out.println(provincia);
 		this.estudianteService.actualizar(estudiante);
+		
+		
+		
 	}
+	
+	@PutMapping(path = "/act2/{id}", consumes = {
+			MediaType.APPLICATION_JSON_VALUE
+	},produces = { MediaType.APPLICATION_XML_VALUE})
+	public ResponseEntity<Estudiante> actualizar2(@PathVariable("id") Integer id,@RequestBody Estudiante estudiante, @RequestParam String provincia) {
+		estudiante.setId(id);
+		System.out.println(provincia);
+		this.estudianteService.actualizar(estudiante);
+		Estudiante estu=this.estudianteService.encontrar(id);
+		return ResponseEntity.status(HttpStatus.OK).body(estu);
+		
+		
+		
+	}
+	
+	
+
+	
 	
 	@PutMapping
 	public void actualizarTodos(Estudiante estudiante) {
@@ -47,7 +71,9 @@ public class EstudianteControllerRestFull {
 	}
 	
 	
-	@GetMapping(path ="/{id}")
+	@GetMapping(path ="/{id}", produces = {
+			MediaType.APPLICATION_XML_VALUE
+	})
 	public ResponseEntity<Estudiante>  encontrar(@PathVariable("id") Integer id) {
 		
 		Estudiante estu=this.estudianteService.encontrar(id);
