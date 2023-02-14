@@ -55,6 +55,7 @@ public class EstudianteControllerRestFull {
 		System.out.println(provincia);
 		this.estudianteService.actualizar(estudiante);
 		Estudiante estu=this.estudianteService.encontrar(id);
+		System.out.println(estu);
 		return ResponseEntity.status(HttpStatus.OK).body(estu);
 		
 		

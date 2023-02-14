@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +37,42 @@ public class ProfesorControllerRestFull {
 	public void actualizarTodos(Profesor profesor) {
 		//
 	}
+	
+	
+	//tarea
+//	Capacidad que reciba un Media Type application/json
+	
+	@PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
+	public void ingresarProfeJson(@RequestBody Profesor profesor) {
+		this.profesorService.registrar(profesor);
+	}
+	
+//	Capacidad de retorne un Media Type application/json
+	
+	@GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Profesor buscarProfeJson( @PathVariable("id") Integer id) {
+		return this.profesorService.encontrar(id);
+	}
+	
+	
+	
+//	Capacidad que reciba un Media Type application/xml
+	@PostMapping(consumes = {MediaType.APPLICATION_XML_VALUE})
+	public void ingresaProfeXml(@RequestBody Profesor profesor) {
+		this.profesorService.registrar(profesor);
+	}
+	
+//	Capacidad de retorne un Media Type application/xml
+	
+	@GetMapping(produces = {MediaType.APPLICATION_XML_VALUE})
+	public Profesor buscarProfeXml(@PathVariable("id") Integer id) {
+		return this.profesorService.encontrar(id);
+	}
+//	Capacidad que reciba y retorne un Media Type application/json
+//	Capacidad que reciba y retorne un Media Type application/xml
+	
+	
+	
 	
 	
 	
