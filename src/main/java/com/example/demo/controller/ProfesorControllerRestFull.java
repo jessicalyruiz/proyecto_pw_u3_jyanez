@@ -69,9 +69,22 @@ public class ProfesorControllerRestFull {
 		return this.profesorService.encontrar(id);
 	}
 //	Capacidad que reciba y retorne un Media Type application/json
+	
+	@PutMapping(path = "/json/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE},produces = {MediaType.APPLICATION_JSON_VALUE})
+	public Profesor actualizarBuscarJson(@RequestBody Profesor profe, @PathVariable("id") Integer id) {
+		profe.setId(id);
+		this.profesorService.actualizar(profe);
+		return this.profesorService.encontrar(id);
+		
+	}
+	
 //	Capacidad que reciba y retorne un Media Type application/xml
-	
-	
+	@PutMapping(path = "/xml/{id}", consumes = {MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_XML_VALUE})
+	public Profesor actualizarBuscarXml(Profesor profe, @PathVariable("id") Integer id) {
+		profe.setId(id);
+		this.profesorService.actualizar(profe);
+		return this.profesorService.encontrar(id);
+	}
 	
 	
 	
