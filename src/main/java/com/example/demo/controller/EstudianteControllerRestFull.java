@@ -1,10 +1,13 @@
 package com.example.demo.controller;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.math.BigDecimal;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -21,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.Service.IEstudianteService;
+import com.example.demo.Service.to.EstudianteTO;
+import com.example.demo.Service.to.MateriaTO;
 import com.example.demo.modelo.Estudiante;
 
 //estereotipo para esta capa:
@@ -134,5 +139,41 @@ public class EstudianteControllerRestFull {
 		return this.estudianteService.buscarApellido(apellido);
 		
 	}
+	
+	
+	
+	///////////
+	@GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
+	public  List<EstudianteTO> encontrarTodosHateoas() {
+		List<EstudianteTO> listaTO=this.estudianteService.buscarTodosTO();
+		//hacer el hipervinculo
+		for (EstudianteTO estudianteTO : listaTO) {
+			//es una representacion de una capacidad
+			Link myLink=linkTo(methodOn(EstudianteControllerRestFull.class).buscarMaterias(estudianteTO.getId())).withRel("materias");
+			estudianteTO.add(myLink);
+			
+		}
+		
+		return listaTO;
+		
+		
+	}
+	
+	@GetMapping(path = "/{idEstudiante}/materias")
+	public List<MateriaTO> buscarMaterias(@PathVariable("idEstudiante") Integer idEstudiante){
+		return null;
+	}
+	
+	/*
+	@GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
+	public  ResponseEntity<List<Estudiante>> encontrarTodosHateoas() {
+		List<EstudianteTO> listaTO=this.estudianteService.buscarTodosTO();
+		
+		
+		return null;
+		
+		
+	}*/
+	
 
 }
