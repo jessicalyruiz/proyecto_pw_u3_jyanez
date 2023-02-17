@@ -41,7 +41,7 @@ public class EstudianteControllerRestFull {
 		this.estudianteService.registrar(estudiante);
 	}
 	@PutMapping(path = "/{id}", consumes = {
-			MediaType.APPLICATION_XML_VALUE
+			MediaType.APPLICATION_JSON_VALUE
 	})
 	public void actualizar(@PathVariable("id") Integer id,@RequestBody Estudiante estudiante, @RequestParam String provincia) {
 		estudiante.setId(id);
@@ -54,7 +54,7 @@ public class EstudianteControllerRestFull {
 	
 	@PutMapping(path = "/act2/{id}", consumes = {
 			MediaType.APPLICATION_JSON_VALUE
-	},produces = { MediaType.APPLICATION_XML_VALUE})
+	},produces = { MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<Estudiante> actualizar2(@PathVariable("id") Integer id,@RequestBody Estudiante estudiante, @RequestParam String provincia) {
 		estudiante.setId(id);
 		System.out.println(provincia);
@@ -78,7 +78,7 @@ public class EstudianteControllerRestFull {
 	
 	
 	@GetMapping(path ="/{id}", produces = {
-			MediaType.APPLICATION_XML_VALUE
+			MediaType.APPLICATION_JSON_VALUE
 	})
 	public ResponseEntity<Estudiante>  encontrar(@PathVariable("id") Integer id) {
 		
@@ -89,14 +89,14 @@ public class EstudianteControllerRestFull {
 		
 	}
 	
-	@GetMapping()
-	public  ResponseEntity<List<Estudiante>> encontrarTodos() {
+	@GetMapping(path = "/test",produces = MediaType.APPLICATION_JSON_VALUE)
+	public  List<Estudiante> encontrarTodos() {
 		
 		HttpHeaders cabeceras=new HttpHeaders();
 		cabeceras.add("detalle msj", "Estudiantes encontrados correctamente");
 		 List<Estudiante> lista=this.estudianteService.buscarTodos();
-		return new ResponseEntity<>(lista, cabeceras,230);
-		
+//		return new ResponseEntity<>(lista, cabeceras,230);
+		return lista;
 		
 	}
 	
@@ -143,7 +143,7 @@ public class EstudianteControllerRestFull {
 	
 	
 	///////////
-	@GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public  List<EstudianteTO> encontrarTodosHateoas() {
 		List<EstudianteTO> listaTO=this.estudianteService.buscarTodosTO();
 		//hacer el hipervinculo
@@ -151,7 +151,11 @@ public class EstudianteControllerRestFull {
 			//es una representacion de una capacidad
 			Link myLink=linkTo(methodOn(EstudianteControllerRestFull.class).buscarMaterias(estudianteTO.getId())).withRel("materias");
 			estudianteTO.add(myLink);
+			Link myLink2=linkTo(methodOn(EstudianteControllerRestFull.class).encontrar(estudianteTO.getId())).withSelfRel();
+			estudianteTO.add(myLink2);
 			
+			Link myLink3=linkTo(EstudianteControllerRestFull.class).slash("prueba").slash("estuddiantes").slash(estudianteTO.getId()).withRel("enlacePrueba");
+			estudianteTO.add(myLink3);
 		}
 		
 		return listaTO;

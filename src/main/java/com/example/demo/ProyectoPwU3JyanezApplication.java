@@ -27,7 +27,7 @@ public class ProyectoPwU3JyanezApplication implements CommandLineRunner{
 		// TODO Auto-generated method stub
 		Profesor p1=new Profesor();
 		p1.setApellido("prueba profesor");
-		this.profesorService.registrar(p1);
+		//this.profesorService.registrar(p1);
 	}
 
 }

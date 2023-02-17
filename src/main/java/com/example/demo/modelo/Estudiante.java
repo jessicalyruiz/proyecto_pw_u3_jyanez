@@ -1,5 +1,6 @@
 package com.example.demo.modelo;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -8,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,8 +19,13 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "estudiante")
-public class Estudiante {
+public class Estudiante implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name = "estu_id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_esturio")
@@ -47,7 +54,7 @@ public class Estudiante {
 	@Column(name = "estu_salario")
 	private BigDecimal salario;
 
-	@OneToMany(mappedBy = "estudiante")
+	@OneToMany(mappedBy = "estudiante", fetch = FetchType.EAGER)
 	private List<Materia> materias;
 	
 
